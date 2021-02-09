@@ -1,0 +1,18 @@
+baseURL: http://example.org/
+languageCode: en-us
+title: My New Hugo Site
+theme: r-blog
+
+publishDir: _public
+
+# NOTE: we'd keep the static folder with the setting below, but the static content from the selected theme would so be added to the root!
+#    
+# module:
+#   mounts:
+#   - source: static
+#     target: static/static
+
+baseURL: # Hostname (and path) to the root, e.g. https://bep.is/
+
+# permalinks:
+#     posts: /post/:slug/
