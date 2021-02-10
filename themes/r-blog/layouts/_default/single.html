@@ -1,5 +1,13 @@
 {{ define "main" }}
 
-Single
+<h1>Single: {{ .Type }} for {{ .Title | default .RelPermalink }}</h1>
+
+<article>
+    {{ with .Params.image }}
+    <img src="{{ . | safeURL }}" class="img-responsive" alt="item-thumb">
+    {{ end }}
+
+    {{ .Content }}
+</article>
 
 {{ end }}

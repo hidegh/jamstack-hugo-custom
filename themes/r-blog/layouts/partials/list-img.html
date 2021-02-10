@@ -1,0 +1,18 @@
+{{ $img := .Params.image }}
+{{ $url := "" }}
+    
+{{ if hasPrefix $img "/" }}
+    <!-- full path -->
+    {{ $url = $img | safeURL }}
+{{ else if hasPrefix $img "../" }}
+    <!-- relative to article -->
+    {{ $url = (printf "%s%s" "/" (path.Join (path.Dir .GetIdentity.Path) .Params.image)) | safeURL }}
+{{ else if $img }}
+    <!-- absolute path -->
+    {{ $url = (printf "%s%s" .RelPermalink $img) | safeURL }}
+{{ end }}
+
+{{ if $url }}
+    <!-- path.Join strips the extra / on the beginning, can't use with full .Permalink -->
+    <img src="{{ $url }}" class="img-responsive" alt="item-thumb">
+{{ end }}
