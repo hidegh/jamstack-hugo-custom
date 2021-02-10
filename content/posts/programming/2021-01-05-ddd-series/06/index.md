@@ -6,6 +6,7 @@ categories: [Default-posts, Technical]
 tags: [posts, technical, ddd, intro, series]
 series: ddd series
 series_no: 6
+featured: true
 ---
 
 "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..."

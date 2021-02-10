@@ -1,0 +1,55 @@
+{{ define "main" }}
+
+<h1>{{ .Title }}</h1>
+
+{{ $customPageSize := .Site.Params.posts.page_size }}
+
+{{ $featureTop := .Site.Params.posts.featured.limit | default -1 }}
+{{ $featured := (where (where .Site.RegularPages "Type" .Type) ".Params.featured" "=" true).ByPublishDate.Reverse }}
+{{ $posts := (where .Site.RegularPages "Type" .Type).ByPublishDate.Reverse  }}
+
+{{ if lt $featureTop 0 }}
+    <!-- all featured pages should be shown -->
+{{ else if eq $featureTop 0 }}
+    <!-- no featured pages should be shown -->
+    {{ $featured = first 0 $featured }}
+{{ else }}
+    <!-- amount of featured pages should be limited-->
+    {{ $featured = first $featureTop $featured }}
+{{ end }}
+
+<!-- union will ignore dupplicates (will show unique items) and will keep order of items -->
+{{ $sorted := union $featured $posts }}
+
+<div class="row">
+    {{ $paginator := `` }}
+
+    {{ if $customPageSize }}
+        {{ $paginator = .Paginate ($sorted) $customPageSize }}
+    {{ else }}
+        {{ $paginator = .Paginate ($sorted) }}
+    {{ end }}
+
+    {{ range $paginator.Pages }}
+    <div class="col">
+        <article class="{{ .Type }}-item">
+            <h2><a class="item-title" href="{{ .RelPermalink | safeURL }}">{{ .Title }}</a></h2>
+            {{ partial "posts/list-img" . }}
+            <p class="item-summary">
+                {{ .Summary }}
+            </p>
+            <a href="{{ .RelPermalink }}" class="btn btn-main">Read More</a>
+        </article>
+    </div>
+    {{ end }}
+</div>
+
+<div class="row">
+    <div class="col text-center">
+        {{ template "_internal/pagination.html" . }}
+    </div>
+</div>
+
+</section>
+
+{{ end }}

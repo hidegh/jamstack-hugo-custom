@@ -7,6 +7,7 @@ tags: [posts, technical, ddd, intro, series]
 series: ddd series
 series_no: 4
 image: ../01/intro.jpg
+featured: true
 ---
 
 > OUT AND IN works just when no permalinks are set!

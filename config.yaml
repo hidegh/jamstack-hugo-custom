@@ -14,5 +14,22 @@ publishDir: _public
 
 baseURL: # Hostname (and path) to the root, e.g. https://bep.is/
 
-# permalinks:
-#     posts: /post/:slug/
+paginate: 8
+
+permalinks:
+    posts: /post/:slug/
+
+taxonomies:
+  tag: tags
+  category: categories
+  # you don't need to define the 2 basic taxonomies, but you'll need them if you want to add a 3rd one!
+
+params:
+    posts:
+        page_size: 6 # custom paginator, if not defined, default is used
+        featured:
+            limit: 4 # -1 = all, 0 = none, 1..N - limit TOP
+    taxonomy:
+        categories:
+            byCount: true
+

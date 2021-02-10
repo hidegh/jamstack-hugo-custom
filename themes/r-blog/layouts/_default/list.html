@@ -5,10 +5,9 @@
 <div class="row">
     {{ range (.Paginator).Pages }}
     <div class="col">
-        <article class="item">
+        <article class="{{ .Type }}-item">
             <h2><a class="item-title" href="{{ .RelPermalink | safeURL }}">{{ .Title }}</a></h2>
-            {{ partial "list-img" . }}
-            <p>
+            <p class="item-summary">
                 {{ .Summary }}
             </p>
             <a href="{{ .RelPermalink }}" class="btn btn-main">Read More</a>

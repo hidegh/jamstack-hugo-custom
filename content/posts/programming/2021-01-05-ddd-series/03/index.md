@@ -7,6 +7,7 @@ tags: [posts, technical, ddd, intro, series]
 series: ddd series
 series_no: 3
 image: ../domain-driven-design.jpg
+featured: true
 ---
 
 > Going above the article's path when searching for assets will work only, if the targetted path contains **no article** - **or** if there's **no perma-link** used!

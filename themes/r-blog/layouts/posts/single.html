@@ -1,0 +1,13 @@
+{{ define "main" }}
+
+<h1>{{ .Title }}</h1>
+
+<article>
+    {{ with .Params.image }}
+    <img src="{{ . | safeURL }}" class="img-responsive" alt="item-thumb">
+    {{ end }}
+
+    {{ .Content }}
+</article>
+
+{{ end }}
