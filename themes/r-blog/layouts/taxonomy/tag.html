@@ -1,0 +1,25 @@
+{{ define "main" }}
+
+<h1>Tag {{ .Title }}</h1>
+
+<div class="row">
+    {{ range (.Paginator 4).Pages }}
+    <div class="col">
+        <article class="item">
+            <h2><a class="item-title" href="{{ .RelPermalink | safeURL }}">{{ .Title }}</a></h2>
+            <p>
+                {{ .Summary }}
+            </p>
+            <a href="{{ .RelPermalink }}" class="btn btn-main">Read More</a>
+        </article>
+    </div>
+    {{ end }}
+</div>
+
+<div class="row">
+    <div class="col text-center">
+        {{ template "_internal/pagination.html" . }}
+    </div>
+</div>
+
+{{ end }}

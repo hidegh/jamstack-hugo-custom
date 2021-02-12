@@ -1,0 +1,26 @@
+<!-- $isMatch := partial "taxonomy/category-match-fnc" (dict "pageCategories" .Params.categories "parentCategories" $parentCategories) -->
+<!-- NOTE: partials with return values won't render anything (except output value)! -->
+
+{{ $result := true }}
+
+{{ $pageCategories := .pageCategories | default slice }}
+{{ $parentCategories := .parentCategories | default slice }}
+
+<!-- if parent is more specific than page, then we don't have a match -->
+{{ if and $result (gt (len $parentCategories) (len $pageCategories)) }}
+    {{ $result = false }}
+{{ end}}
+
+<!-- match all parentCategory nodes agains pageCategory nodes and if one fails, we don't have a match, hence FALSE result is set -->
+{{ if and $result (gt $parentCategories 0) }}
+    
+    {{range $index, $element := $parentCategories }}
+        {{ if not (eq (index $parentCategories $index) (index $pageCategories $index)) }}
+            {{ $result = false }}
+        {{ end}}        
+    {{ end }}    
+
+{{ end }}
+
+<!-- can't have multiple returns -->
+{{ return $result }}

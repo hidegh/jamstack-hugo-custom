@@ -1,0 +1,65 @@
+<!-- partial "taxonomy/category-node" (dict "ctx" . "parentCategories" nil "level" 0 "maximumLevel" 4 ) -->
+
+<!-- init -->
+{{ $ctx := .ctx }}
+{{ $parentCategories := .parentCategories | default slice }}
+{{ $level := .level }}
+{{ $maximumLevel := .maximumLevel }}
+
+{{ $allCategoryNames := $ctx.Data.Terms.Alphabetical }}
+{{ $subCategories := slice }}
+
+<!-- get pages for which we will search for next category nodes -->
+{{ $allPages := $ctx.Site.RegularPages }}
+{{ $nodePages := slice }}
+
+<!-- fetching next category node names -->
+{{ range $allPages }}   
+    {{ $hasNextLevel := gt (len (.Params.categories | default slice)) (len $parentCategories) }}
+    {{ $isMatch := partial "taxonomy/category-match-fnc" (dict "pageCategories" .Params.categories "parentCategories" $parentCategories) }}
+    {{ if $isMatch }}
+        {{ if $hasNextLevel }}
+            {{ $subCategories = union $subCategories (slice (index .Params.categories $level)) }}
+        {{ else }}
+            {{ $nodePages = union $nodePages (slice .) }}
+        {{ end }}
+    {{ end }}
+{{ end }}
+
+<!-- some debugging -->
+{{ if eq $level 0 }}
+    <!-- <textarea>{{ $ctx.Data.Terms | jsonify }}</textarea> -->
+{{ end }}
+
+<!-- rendering & nesting -->
+{{ if or (gt (len $subCategories) 0) (gt (len $nodePages)) }}
+
+    <ul>
+
+        <div class="node-pages">
+            {{ range $nodePages }}
+                <div class="node-page-item">
+                    <a href="{{ .Permalink }}">{{ .Title }}</a>                
+                </div>    
+            {{ end }}
+        </div>
+
+        {{ range $subCategories }}
+        <li>
+            <!-- find category in taxonomy terms to display count (count of the given category, not the category hierarchy node) -->
+            {{ $category := index $ctx.Data.Terms (. | lower) }}
+
+            <div class="node-sub-category">
+                <a href="{{ $category.Page.Permalink }}">{{ . }}</a> {{ $category.Count }}
+            </div>
+
+            {{ if lt (add $level 1) $maximumLevel }}
+                {{ partial "taxonomy/category-node" (dict "ctx" $ctx "parentCategories" (union $parentCategories (slice .)) "level" (add $level 1) "maximumLevel" $maximumLevel ) }}
+            {{ end }}            
+
+        </li>
+        {{ end }}
+        
+    </ul>
+
+{{ end }}

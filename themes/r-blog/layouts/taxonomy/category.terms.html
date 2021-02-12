@@ -1,0 +1,15 @@
+{{ define "main" }}
+
+<h1>Categories</h1>
+
+<h2>Hierarchical</h2>
+{{ partial "taxonomy/category-node" (dict "ctx" . "parentCategories" nil "level" 0 "maximumLevel" 4 ) }}
+
+<h2>Default</h2>
+<ul>
+    {{ range .Data.Terms.Alphabetical }}
+    <li><a href="{{ .Page.Permalink }}">{{ .Page.Title }}</a> {{ .Count }}</li>
+    {{ end }}
+</ul>
+
+{{ end }}

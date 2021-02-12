@@ -1,0 +1,28 @@
+{{ define "main" }}
+
+<h1>Category {{ .Title }}</h1>
+
+{{ $paginate := true }}
+{{ $paginateSize := 3 }}
+{{ $paginator := `` }}
+
+<!--  $featureTop := .Site.Params.posts.featured.limit | default -1 -->
+
+{{ $data := .Data.Pages }}
+
+{{ if $paginate }}
+    {{ $paginator = .Paginate (.Data.Pages) $paginateSize }}
+    {{ $data = $paginator.Pages }}
+{{ end }}
+
+{{ range $data }}
+<article>
+    {{ .Title }}<br />
+</article>
+{{ end }}
+
+{{ if $paginate }}
+    {{ template "_internal/pagination.html" . }}
+{{ end }}
+
+{{ end }}

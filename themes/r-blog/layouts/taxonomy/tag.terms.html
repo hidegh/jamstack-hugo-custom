@@ -1,0 +1,11 @@
+{{ define "main" }}
+
+<h1>Tags</h1>
+<ul>
+    {{ range .Data.Terms.Alphabetical }}
+    <li><a href="{{ .Page.Permalink }}">{{ .Page.Title }}</a>{{ .Name }} {{ .Count }}</li>
+    <!-- .Page.Title | .Name | jsonify -->
+    {{ end }}
+</ul>
+
+{{ end }}
