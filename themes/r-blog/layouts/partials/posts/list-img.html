@@ -6,10 +6,10 @@
     {{ $url = $img | safeURL }}
 {{ else if hasPrefix $img "../" }}
     <!-- relative to article -->
-    {{ $url = (printf "%s%s" "/" (path.Join (path.Dir .GetIdentity.Path) .Params.image)) | safeURL }}
+    {{ $url = (printf "%s" (path.Join .RelPermalink $img)) | safeURL }}
 {{ else if $img }}
     <!-- absolute path -->
-    {{ $url = (printf "%s%s" .RelPermalink $img) | safeURL }}
+    {{ $url = (printf "%s" (path.Join .RelPermalink $img)) | safeURL }}
 {{ end }}
 
 {{ if $url }}
